@@ -82,9 +82,12 @@ public class CursoMateriaDB {
     
     public boolean guardarSinProf(Curso c, Materia m){
         CursoMateria cm = new CursoMateria();
+        Profesor p = new Profesor();
+        p.setPerId(0);
         cm.setCurso(c);
         cm.setMateria(m);
         cm.setCurmatId(0);
+        cm.setProfesor(p);
         try{
             if(!this.ss.isOpen())
                 this.ss = HibernateUtil.getSessionFactory().openSession();
@@ -113,6 +116,23 @@ public class CursoMateriaDB {
         }catch(Exception e){
             e.printStackTrace();
             System.out.println("///////////// error en UNICO obtener Materias   por curso  "+e.getMessage());
+            return null;
+        }
+    }
+    
+    public CursoMateria buscarUnicaID(String id){
+        ArrayList<CursoMateria> ret = null;
+        try{
+            if(!this.ss.isOpen())
+                this.ss = HibernateUtil.getSessionFactory().openSession();
+            Transaction tx = this.ss.beginTransaction();
+            ret = (ArrayList<CursoMateria>) this.ss.createQuery("from Clases.CursoMateria where curmat_id="+id).list();
+            tx.commit();
+            this.ss.close();
+            return ret.get(0);
+        }catch(Exception e){
+            e.printStackTrace();
+            System.out.println("///////////// error en UNICO obtener Materias   por ID  "+e.getMessage());
             return null;
         }
     }
@@ -152,6 +172,31 @@ public class CursoMateriaDB {
             return true;
         }catch(Exception e){
             System.out.println("En ASIGNAR profesor a curso materia DB - "+e.getMessage()+" - - ");
+            Transaction tx = this.ss.beginTransaction();
+            tx.rollback();
+            return false;
+        }
+    }
+    
+    public boolean eliminarMateriasDeCurso(String curso){
+        ArrayList<CursoMateria> curmat = materiasPorCursoParalelo(curso);
+        try{
+            if(!this.ss.isOpen())
+                this.ss = HibernateUtil.getSessionFactory().openSession();
+            Transaction tx = this.ss.beginTransaction();
+            System.out.println("ELIMINANDO CURSO MATERIA ");
+            
+            for(CursoMateria cm : curmat){
+                this.ss.delete(cm);
+            }
+            
+            tx.commit();
+            this.ss.close();
+            return true;
+        }catch(Exception e){
+            System.out.println("En ELIMINAR CURSOMATERIA DB- "+e.getMessage()+" - - ");
+            Transaction tx = this.ss.beginTransaction();
+            tx.rollback();
             return false;
         }
     }

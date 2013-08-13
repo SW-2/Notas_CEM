@@ -39,6 +39,10 @@ public class CursoMateriaLogic {
         return cmdb.buscarUnica(curso, materia);
     }
     
+    public CursoMateria buscarUnicaID(String id){
+        return cmdb.buscarUnicaID(id);
+    }
+    
     public ArrayList<CursoMateria> materiasPorProfesor(String profe){
         return cmdb.materiasPorProfesor(profe);
     }

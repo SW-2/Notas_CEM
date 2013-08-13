@@ -21,8 +21,8 @@ and open the template in the editor.
 		<h:outputStylesheet name="css/style.css" />
 		<h:outputStylesheet name="css/style-desktop.css" />
 		</noscript>
-                <h:outputScript name="css/5grid/jquery.js"></h:outputScript>
-		<h:outputScript name="css/5grid/init.js?use=mobile,desktop,1000px&amp;mobileUI=1&amp;mobileUI.theme=none"></h:outputScript>
+                
+		
 		<!--[if IE 9]><link rel="stylesheet" href="css/style-ie9.css" /><![endif]-->
     </h:head>
     
@@ -57,26 +57,26 @@ and open the template in the editor.
 
         <p:panel header="Seleccione Sección y Curso para Consultar Materias y Asignar Profesor" style="margin-bottom:10px;">  
             <h:panelGrid columns="3" cellpadding="5">  
-                <p:selectOneMenu id="seccion" value="#{seccionBean.seccionId}">  
+                <h:selectOneMenu id="seccion" value="#{seccionBean.seccionId}">  
                     <f:selectItem itemLabel="Seleccione Seccion" itemValue="" />  
                     <f:selectItems value="#{seccionBean.secciones}" var="sec" />  
-                    <p:ajax update="cursos"  
+                    <p:ajax process="@this" update="cursos"  
                             listener="#{seccionBean.handleSeccionChange()}" />  
-                </p:selectOneMenu>  
+                </h:selectOneMenu>  
 
-                <p:selectOneMenu id="cursos" value="#{seccionBean.cursoId}">  
+                <h:selectOneMenu id="cursos" value="#{seccionBean.cursoId}">  
                     <f:selectItem itemLabel="Seleccione Curso" itemValue="" />  
                     <f:selectItems value="#{seccionBean.cursos}"/>  
-                    <p:ajax update="paralelos"  
+                    <p:ajax process="@this" update="paralelos"  
                             listener="#{seccionBean.handleCursoChange()}" />
-                </p:selectOneMenu>
+                </h:selectOneMenu>
                 
-                <p:selectOneMenu id="paralelos" value="#{seccionBean.paraleloId}">  
+                <h:selectOneMenu id="paralelos" value="#{seccionBean.paraleloId}">  
                     <f:selectItem itemLabel="Seleccione Paralelo" itemValue="" />  
                     <f:selectItems value="#{seccionBean.paralelos}"/>  
-                    <p:ajax update="pars"  
+                    <p:ajax process="@this" update="pars"  
                             listener="#{seccionBean.handeParaleloChange3()}" />
-                </p:selectOneMenu>
+                </h:selectOneMenu>
                 
             </h:panelGrid>  
 
@@ -87,23 +87,20 @@ and open the template in the editor.
                              id="pars" value="#{seccionBean.dmMaterias}" var="curmat" 
                              rowKey="#{curmat}" editable="true">
                     
-                    <p:ajax event="rowSelect" oncomplete="perDialog.show()" update=":pop:display"/>
+                    <p:ajax  event="rowSelect" update=":pop:display"/>
                     
                     <p:column headerText="MATERIA" style="width:25%">  
                         <h:outputText value="#{curmat.materia.matNombre}" /> 
                     </p:column> 
-                </p:dataTable>
-                
-                
-                    
+                </p:dataTable>  
             </h:panelGrid>
 
         </p:panel>  
     </h:form>  
+            
         <h:form id="pop">
                 <p:panel id="dialog" header="Materia" widgetVar="perDialog" resizable="false"  
                             showEffect="fade" hideEffect="explode">
-                    
                     <h:panelGrid id="display" columns="2" cellpadding="4">  
                         <f:facet name="header">  
                             #{seccionBean.selectedCM.materia.matNombre}
@@ -111,10 +108,10 @@ and open the template in the editor.
                         <h:outputText value="Profesor actual: " />  
                             #{seccionBean.selectedCM.profesor.persona.perApellidos} #{seccionBean.selectedCM.profesor.persona.perNombres}
                         <h:outputText value="Cambiar: " />  
-                        <p:autoComplete value="#{seccionBean.inputProf}" 
-                                        id="basicPojo" completeMethod="#{seccionBean.autoComplete}" /> 
+                        <p:autoComplete value="#{seccionBean.inputProf}" autocomplete="true"
+                                         completeMethod="#{seccionBean.autocomplete}" /> 
                     </h:panelGrid>   
-                        <p:commandButton value="Guardar" id="btPop" actionListener="#{seccionBean.prueba}"/>
+                    <p:commandButton update=":form:pars dialog" value="Guardar" id="btPop" actionListener="#{seccionBean.asignarProfMateria}"/>
                 </p:panel>
             </h:form>
         </div>

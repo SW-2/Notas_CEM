@@ -21,8 +21,7 @@ and open the template in the editor.
 		<h:outputStylesheet name="css/style.css" />
 		<h:outputStylesheet name="css/style-desktop.css" />
 		</noscript>
-                <h:outputScript name="css/5grid/jquery.js"></h:outputScript>
-		<h:outputScript name="css/5grid/init.js?use=mobile,desktop,1000px&amp;mobileUI=1&amp;mobileUI.theme=none"></h:outputScript>
+
 		<!--[if IE 9]><link rel="stylesheet" href="css/style-ie9.css" /><![endif]-->
     </h:head>
     
@@ -56,22 +55,22 @@ and open the template in the editor.
 
         <p:panel header="Seleccione Sección y Curso para Consultar, Modificar o Crear Paralelos" style="margin-bottom:10px;">  
             <h:panelGrid columns="2" cellpadding="20" cellspacing="20">  
-                <h:selectOneMenu id="seccion" value="#{seccionBean.seccionId}">  
+                <p:selectOneMenu id="seccion" value="#{seccionBean.seccionId}">  
                     <f:selectItem itemLabel="Seleccione Seccion" itemValue="" />  
                     <f:selectItems value="#{seccionBean.secciones}" var="sec" />  
                     <p:ajax update="cursos"  
                             listener="#{seccionBean.handleSeccionChange()}" />  
-                </h:selectOneMenu>  
+                </p:selectOneMenu>  
 
-                <h:selectOneMenu id="cursos" value="#{seccionBean.cursoId}">  
+                <p:selectOneMenu id="cursos" value="#{seccionBean.cursoId}">  
                     <f:selectItem itemLabel="Seleccione Curso" itemValue="" />  
                     <f:selectItems value="#{seccionBean.cursos}"/>  
                     <p:ajax update="pars"  
                             listener="#{seccionBean.handleCursoChange()}" />
-                </h:selectOneMenu>
+                </p:selectOneMenu>
                 <p:commandButton value="Crear paralelo" update="pars" actionListener="#{seccionBean.crearParalelo()}" id="btnSubmit"/>  
-                <p:commandButton id="modalDialogButton" value="Eliminar" 
-                                     onclick="dlog.show()" type="button"/> 
+                <p:commandButton id="modalDialogButton" value="Eliminar" onclick="dlog.show()"  
+                                 actionListener="#{seccionBean.prueba}" update="modalDialog"/> 
             </h:panelGrid>  
 
             <p:separator />  
@@ -81,14 +80,10 @@ and open the template in the editor.
                 <p:column headerText="Paralelo">
                     <h:outputText value="#{curso.curParalelo}"/>
                 </p:column>
-                <p:column headerText="">
-                    <p:commandButton id="modalDialogButton" value="Eliminar" 
-                                     onclick="'dlog'.show()" type="button"/> 
-                </p:column>
             </p:dataTable>
         </p:panel>
             <p:dialog id="modalDialog" header="Modal Dialog" widgetVar="dlog" modal="true" height="100">  
-                <h:outputText value="This is a Modal Dialog." />  
+                <h:outputText value="#{seccionBean.selectedCurso.curNombre}" />  
             </p:dialog>
     </h:form>
             

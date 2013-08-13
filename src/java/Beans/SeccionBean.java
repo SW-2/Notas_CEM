@@ -461,6 +461,12 @@ public class SeccionBean implements Serializable{
         this.selectedPersona = selectedPersona;
     }
     
+    public void prueba(){
+        System.out.println("Estoy en el evento de prueba --> "+selectedCurso.getCurNombre()+" - "+selectedCurso.getCurParalelo());
+        CursoLogic cl = new CursoLogic();
+        cl.eliminarParalelo(""+selectedCurso.getCurId());
+    }
+    
     public void enviarCalificaciones(){
         CalificacionEstudianteLogic cel = new CalificacionEstudianteLogic();
         System.out.println("********////****Calificacion: --->");
@@ -472,16 +478,16 @@ public class SeccionBean implements Serializable{
         }
     }
     
-    public List<String> autoComplete(String nombre){
-        System.out.println("estoy aqui---------------------");
+    public List<String> autocomplete(String nombre){
+        System.out.println("estoy en atucomplete---------------------");
         System.out.println(nombre);
         List<String> ret = new ArrayList<String>();
         for(Profesor p: todosProfesores){
-            if(p.getPersona().getPerApellidos().startsWith(nombre)){
+            if(p.getPersona().getPerApellidos().toUpperCase().startsWith(nombre.toUpperCase())){
                 System.out.println(p.getPersona().getPerNombres());
                 ret.add(p.getPerId()+" - "+p.getPersona().getPerApellidos().trim()+" "+p.getPersona().getPerNombres().trim());
             }
-            if(p.getPersona().getPerNombres().startsWith(nombre)){
+            if(p.getPersona().getPerNombres().toUpperCase().startsWith(nombre.toUpperCase())){
                 ret.add(p.getPerId()+" - "+p.getPersona().getPerApellidos().trim()+" "+p.getPersona().getPerNombres().trim());
             }
         }
@@ -499,8 +505,16 @@ public class SeccionBean implements Serializable{
         
     }
     
-    public void prueba(){
+    public void asignarProfMateria(){
+        inputProf = inputProf.substring(0,inputProf.indexOf("-"));
         System.out.println("-----------ya estamos aqui -->"+inputProf);
+        //selectedCM;
+        CursoMateriaLogic cml = new CursoMateriaLogic();
+        cml.asignarProfesorACursoMateria(inputProf.trim(), ""+selectedCM.getCurmatId());
+        handeParaleloChange3();
+        inputProf = "";
+        
+        selectedCM = cml.buscarUnicaID(""+selectedCM.getCurmatId());
     }
 }
 

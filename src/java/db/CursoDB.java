@@ -6,6 +6,7 @@ package db;
 
 import Clases.Curso;
 import Clases.CursoEstudiante;
+import Clases.CursoMateria;
 import Clases.HibernateUtil;
 import java.util.ArrayList;
 import org.hibernate.Session;
@@ -144,17 +145,26 @@ public class CursoDB {
         Curso c = this.buscarUnico(curso);
         CursoEstudianteDB cedb = new CursoEstudianteDB();
         ArrayList<CursoEstudiante> lsCE = cedb.buscarPorCurso(curso);
+        
+        CursoMateriaDB cmdb = new CursoMateriaDB();
+        
+        //primero verifico si no hay estudiantes registrados en el curso (paralelo)
         if(lsCE.isEmpty()){
             try{
             if(!this.ss.isOpen())
                 this.ss = HibernateUtil.getSessionFactory().openSession();
-            Transaction tx = this.ss.beginTransaction();
-            this.ss.delete(c);
-            tx.commit();
-            this.ss.close();
-            return true;
+            if(cmdb.eliminarMateriasDeCurso(curso)){
+                Transaction tx = this.ss.beginTransaction();
+                this.ss.delete(c);
+                tx.commit();
+                this.ss.close();
+                return true;
+            }else
+                return false;
         }catch(Exception e){
             System.out.println("En ELIMINAR curso/PARALELO- "+e.getMessage()+" - - ");
+            Transaction tx = this.ss.beginTransaction();
+            tx.rollback();
             return false;
         }
         }else return false;

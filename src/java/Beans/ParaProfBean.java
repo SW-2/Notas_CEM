@@ -9,6 +9,7 @@ import Clases.CursoMateria;
 import java.io.Serializable;
 import java.util.ArrayList;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
@@ -22,15 +23,36 @@ import logica.CursoMateriaLogic;
 @ManagedBean
 @SessionScoped
 public class ParaProfBean implements Serializable{
+    @ManagedProperty(value="#{loginBean.usuario}")
+    private String idProfesor;
     private DataModel dmCursoMaterias;
     private CursoMateria selectedCURMAT = new CursoMateria();
     private CalificacionEstudianteDataModel dmCalEst;
     private CalificacionEstudiante selectedCalEst = new CalificacionEstudiante();
+    
     /**
      * Creates a new instance of ParaProfBean
      */
     public ParaProfBean() {
     }
+
+    public String getIdProfesor() {
+        return idProfesor;
+    }
+
+    public void setIdProfesor(String idProfesor) {
+        this.idProfesor = idProfesor;
+    }
+
+    public CalificacionEstudiante getSelectedCalEst() {
+        return selectedCalEst;
+    }
+
+    public void setSelectedCalEst(CalificacionEstudiante selectedCalEst) {
+        this.selectedCalEst = selectedCalEst;
+    }
+    
+    
 
     public CalificacionEstudianteDataModel getDmCalEst() {
         return dmCalEst;
@@ -57,9 +79,9 @@ public class ParaProfBean implements Serializable{
     }
     
     public void simularLogin(){
-        System.out.println("-------------------///////////////////toy en el evento simular");
+        System.out.println("-------------------///////////////////toy en el evento simular :::: "+idProfesor);
         CursoMateriaLogic cml = new CursoMateriaLogic();
-        ArrayList<CursoMateria> lista = cml.materiasPorProfesor("28");
+        ArrayList<CursoMateria> lista = cml.materiasPorProfesor(idProfesor);
         dmCursoMaterias = new ListDataModel(lista);   
     }
     

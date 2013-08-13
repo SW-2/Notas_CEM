@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>HeavyIndustry by HTML5Templates.com</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="description" content="" />
+		<meta name="keywords" content="" />
+		<noscript>
+		<h:outputStylesheet name="css/5grid/core.css" />
+		<h:outputStylesheet name="css/5grid/core-desktop.css" />
+		<h:outputStylesheet name="css/5grid/core-1200px.css" />
+		<h:outputStylesheet name="css/5grid/core-noscript.css" />
+		<h:outputStylesheet name="css/style.css" />
+		<h:outputStylesheet name="css/style-desktop.css" />
+		</noscript>
+                <h:outputScript name="css/5grid/jquery.js"></h:outputScript>
+		<h:outputScript name="css/5grid/init.js?use=mobile,desktop,1000px&amp;mobileUI=1&amp;mobileUI.theme=none"></h:outputScript>
+		<!--[if IE 9]><link rel="stylesheet" href="css/style-ie9.css" /><![endif]-->
+    </h:head>
+    
+    <h:body>
+        <!-- Header -->
+        <div id="header-wrapper">
+            <header id="header">
+                <div class="5grid-layout">
+                    <div class="row">
+                        <div class="5u" id="logo">
+                            <h1><a href="#" class="mobileUI-site-name">HeavyIndustry</a></h1>
+                        </div>
+                        <div class="7u" id="menu">
+                            <nav class="mobileUI-site-nav">
+                                <ul>
+                                    <li><a href="#{request.contextPath}/faces/layout.xhtml">Cursos - Paralelos</a></li>
+                                    <li class="current_page_item"><a href="#">Profesor - Materia</a></li>
+                                    <li><a href="#">Opcion #2</a></li>
+                                    <li><a href="#">Opcion #3</a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </header>
+        </div>
+        
+        <div id="wrapper" class="5grid-layout">
+     
+    <h:form id="form">  
+  
+
+        <p:panel header="Seleccione Sección y Curso para Consultar Materias y Asignar Profesor" style="margin-bottom:10px;">  
+            <h:panelGrid columns="3" cellpadding="5">  
+                <p:selectOneMenu id="seccion" value="#{seccionBean.seccionId}">  
+                    <f:selectItem itemLabel="Seleccione Seccion" itemValue="" />  
+                    <f:selectItems value="#{seccionBean.secciones}" var="sec" />  
+                    <p:ajax update="cursos"  
+                            listener="#{seccionBean.handleSeccionChange()}" />  
+                </p:selectOneMenu>  
+
+                <p:selectOneMenu id="cursos" value="#{seccionBean.cursoId}">  
+                    <f:selectItem itemLabel="Seleccione Curso" itemValue="" />  
+                    <f:selectItems value="#{seccionBean.cursos}"/>  
+                    <p:ajax update="paralelos"  
+                            listener="#{seccionBean.handleCursoChange()}" />
+                </p:selectOneMenu>
+                
+                <p:selectOneMenu id="paralelos" value="#{seccionBean.paraleloId}">  
+                    <f:selectItem itemLabel="Seleccione Paralelo" itemValue="" />  
+                    <f:selectItems value="#{seccionBean.paralelos}"/>  
+                    <p:ajax update="pars"  
+                            listener="#{seccionBean.handeParaleloChange3()}" />
+                </p:selectOneMenu>
+                
+            </h:panelGrid>  
+
+            <p:separator />  
+            
+            <h:panelGrid columns="2" cellpadding="5"> 
+                <p:dataTable selectionMode="single" selection="#{seccionBean.selectedCM}" 
+                             id="pars" value="#{seccionBean.dmMaterias}" var="curmat" 
+                             rowKey="#{curmat}" editable="true">
+                    
+                    <p:ajax event="rowSelect" oncomplete="perDialog.show()" update=":pop:display"/>
+                    
+                    <p:column headerText="MATERIA" style="width:25%">  
+                        <h:outputText value="#{curmat.materia.matNombre}" /> 
+                    </p:column> 
+                </p:dataTable>
+                
+                
+                    
+            </h:panelGrid>
+
+        </p:panel>  
+    </h:form>  
+        <h:form id="pop">
+                <p:panel id="dialog" header="Materia" widgetVar="perDialog" resizable="false"  
+                            showEffect="fade" hideEffect="explode">
+                    
+                    <h:panelGrid id="display" columns="2" cellpadding="4">  
+                        <f:facet name="header">  
+                            #{seccionBean.selectedCM.materia.matNombre}
+                        </f:facet>  
+                        <h:outputText value="Profesor actual: " />  
+                            #{seccionBean.selectedCM.profesor.persona.perApellidos} #{seccionBean.selectedCM.profesor.persona.perNombres}
+                        <h:outputText value="Cambiar: " />  
+                        <p:autoComplete value="#{seccionBean.inputProf}" 
+                                        id="basicPojo" completeMethod="#{seccionBean.autoComplete}" /> 
+                    </h:panelGrid>   
+                        <p:commandButton value="Guardar" id="btPop" actionListener="#{seccionBean.prueba}"/>
+                </p:panel>
+            </h:form>
+        </div>
+    </h:body>
+</html>

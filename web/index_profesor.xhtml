@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Estudiantes - Paralelos</title>
+    </h:head>
+    <body>
+        <p:layout fullPage="true">  
+  
+    <p:layoutUnit position="north" size="100" header="Nombre del profesor" >  
+        <h:outputText value="Elija del lado izquierdo la materia que va a calificar" />  
+        <h:form>
+            <p:commandButton value="Simular" actionListener="#{paraProfBean.simularLogin()}" update=":formmaterias:materias"/>
+        </h:form>
+    </p:layoutUnit>  
+  
+  
+    <p:layoutUnit position="west" size="200" header="Materias" resizable="true" closable="false" collapsible="true">  
+        <h:form id="formmaterias">
+            <p:dataTable    selection="#{paraProfBean.selectedCURMAT}" selectionMode="single"
+                id="materias" value="#{paraProfBean.dmCursoMaterias}" var="curmat" 
+                             rowKey="#{curmat}">
+                <p:column headerText="Curso">
+                    <h:outputText value="#{curmat.curso.curNombre}"/>
+                </p:column>
+                <p:column headerText="Seccion">
+                    <h:outputText value="#{curmat.curso.seccion.secNombre}"/>
+                </p:column>
+                <p:column headerText="Paralelo">
+                    <h:outputText value="#{curmat.curso.curParalelo}"/>
+                </p:column>
+                <p:column headerText="Materia">
+                    <h:outputText value="#{curmat.materia.matNombre}"/>
+                </p:column>
+            </p:dataTable>
+            <p:commandButton value="mostrar" actionListener="#{paraProfBean.mostrarActa()}" update=":formacta:acta"/>
+        </h:form>
+    </p:layoutUnit>  
+  
+    <p:layoutUnit position="center">  
+        <h:form id="formacta">
+            <p:dataTable id="acta" value="#{paraProfBean.dmCalEst}" var="calest">
+                <p:column headerText="Estudiante" >
+                    #{calest.estudiante.persona.perApellidos} #{calest.estudiante.persona.perNombres}
+                </p:column>  
+                <p:column headerText="Calificacion"> 
+                    <h:inputText value="#{calest.calestNota}" />			
+                </p:column>   
+            </p:dataTable>
+            <p:commandButton value="Enviar" id="enviarCalificaciones" actionListener="#{paraProfBean.enviarCalificaciones}"/>
+        </h:form>  
+    </p:layoutUnit>  
+  
+</p:layout>
+    </body>
+</html>

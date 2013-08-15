@@ -40,6 +40,8 @@ public class CursoMateriaBean implements Serializable {
     
     private String parametro;
     MateriaDataModel materiaDM;
+    
+    private Materia selectedMateria;
   
     public CursoMateriaBean() {  
         root = new DefaultTreeNode("Root", null);  
@@ -69,6 +71,16 @@ public class CursoMateriaBean implements Serializable {
         
         
     }  
+
+    public Materia getSelectedMateria() {
+        return selectedMateria;
+    }
+
+    public void setSelectedMateria(Materia selectedMateria) {
+        this.selectedMateria = selectedMateria;
+    }
+    
+    
 
     public String getParametro() {
         return parametro;
@@ -144,6 +156,15 @@ public class CursoMateriaBean implements Serializable {
             
             materiaDM = new MateriaDataModel(lista);  
         }  
+    }
+    
+    public void prueba(){
+        CursoLogic cl = new CursoLogic();
+        CursoMateriaLogic cml = new CursoMateriaLogic();
+        Curso c = cl.buscarCursoSeccionParalelo(secciones_rev.get(selectedNode.getParent().getData().toString()).toString(), selectedNode.getData().toString(), "A");
+        //selectedMateria;
+        cml.eliminarCursoMateria(c, selectedMateria);
+        System.out.println("En el evento");
     }
     
 

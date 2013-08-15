@@ -4,6 +4,7 @@
  */
 package db;
 
+import Clases.CalificacionEstudiante;
 import Clases.Curso;
 import Clases.CursoMateria;
 import Clases.HibernateUtil;
@@ -83,7 +84,7 @@ public class CursoMateriaDB {
     public boolean guardarSinProf(Curso c, Materia m){
         CursoMateria cm = new CursoMateria();
         Profesor p = new Profesor();
-        p.setPerId(0);
+        p.setPerId(38);
         cm.setCurso(c);
         cm.setMateria(m);
         cm.setCurmatId(0);
@@ -195,10 +196,38 @@ public class CursoMateriaDB {
             return true;
         }catch(Exception e){
             System.out.println("En ELIMINAR CURSOMATERIA DB- "+e.getMessage()+" - - ");
-            Transaction tx = this.ss.beginTransaction();
+            Transaction tx = this.ss.getTransaction();
             tx.rollback();
             return false;
         }
+    }
+    
+    public boolean eliminarCursoMateria(String curso, String materia){
+        CursoMateria curmat = buscarUnica(curso, materia);
+        CalificacionEstudianteDB cedb = new CalificacionEstudianteDB();
+        ArrayList<CalificacionEstudiante> notas = cedb.obtenerPorCursoMateria(""+curmat.getCurmatId());
+        for(CalificacionEstudiante ce: notas){
+            if(ce.getCalestNota() != null)
+                return false;
+        }
+        if(cedb.eliminarPorCursoMateria(""+curmat.getCurmatId())){
+            try{
+                if(!this.ss.isOpen())
+                    this.ss = HibernateUtil.getSessionFactory().openSession();
+                Transaction tx = this.ss.beginTransaction();
+                System.out.println("ELIMINANDO CURSO - MATERIA ");
+                this.ss.delete(curmat);
+                tx.commit();
+                this.ss.close();
+                return true;
+            }catch(Exception e){
+                System.out.println("En ELIMINAR CURSOMATERIA DB- "+e.getMessage()+" - - ");
+                Transaction tx = this.ss.getTransaction();
+                tx.rollback();
+                return false;
+            }
+        }
+        else return false;
     }
     
 }

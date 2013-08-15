@@ -9,12 +9,51 @@ and open the template in the editor.
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <title>Materias</title>
+        <title>HeavyIndustry by HTML5Templates.com</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="description" content="" />
+		<meta name="keywords" content="" />
+		<noscript>
+		<h:outputStylesheet name="css/5grid/core.css" />
+		<h:outputStylesheet name="css/5grid/core-desktop.css" />
+		<h:outputStylesheet name="css/5grid/core-1200px.css" />
+		<h:outputStylesheet name="css/5grid/core-noscript.css" />
+		<h:outputStylesheet name="css/style.css" />
+		<h:outputStylesheet name="css/style-desktop.css" />
+		</noscript>
+
+		<!--[if IE 9]><link rel="stylesheet" href="css/style-ie9.css" /><![endif]-->
     </h:head>
     <h:body>
+        <!-- Header -->
+        <div id="header-wrapper">
+            <header id="header">
+                <div class="5grid-layout">
+                    <div class="row">
+                        <div class="5u" id="logo">
+                            <h1><a href="#" class="mobileUI-site-name">HeavyIndustry</a></h1>
+                        </div>
+                        <div class="7u" id="menu">
+                            <nav class="mobileUI-site-nav">
+                                <ul>
+                                    <li><a href="#{request.contextPath}/faces/layout.xhtml">Cursos - Paralelos</a></li>
+                                    <li><a href="#{request.contextPath}/faces/asignar_profesor.xhtml">Profesor - Materia</a></li>
+                                    <li class="current_page_item"><a href="#{request.contextPath}/faces/materia_curso.xhtml">Curso - Materia</a></li>
+                                    <li><a href="#">Opcion #3</a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </header>
+        </div>
+        
+        <div id="wrapper" class="5grid-layout">
+        
+        
         <p:tabView id="tabView" style="padding: 0px;margin: 0px;height: 800px; width: 1000px;margin-left: 90px; ">  
             <p:tab id="tab1" title="Calificaciones" >
-                <h:panelGrid columns="3" cellpadding="15">   
+                <h:panelGrid columns="2" cellpadding="15">   
                 <h:form id="form">
                     Seleccione curso
                     <p:tree id="treeSingle" value="#{cursoMateriaBean.root}" var="node"  
@@ -31,26 +70,32 @@ and open the template in the editor.
 
                 </h:form>
                     <h:form id="listado">  
-                        <p:dataTable id="materias" var="result" value="#{cursoMateriaBean.materiaDM}"
-                                rowKey="#{result.matId}"
-                                selectionMode="single"> 
+                        <p:dataTable id="materias" selection="#{cursoMateriaBean.selectedMateria}" 
+                                     selectionMode="single" var="result" value="#{cursoMateriaBean.materiaDM}"> 
                                  <f:facet name="header">
-                                   Materias del curso
+                                   Agregar nueva
+                                   <p:commandButton id="btAgregar" icon="ui-icon-plus" update=":tabView:nuevamat:nuevamateria" title="Eliminar" onclick="dlog.show()"/>  
+                                     Eliminar seleccionada
+                                   <p:commandButton id="btEliminar" update=":tabView:listado"  icon="ui-icon-trash" title="Eliminar" actionListener="#{cursoMateriaBean.prueba}"/>  
                                  </f:facet>
                                  <p:column>
                                      #{result.matNombre}
-                                </p:column>  
-                
+                                </p:column> 
+
                         </p:dataTable> 
                     </h:form>
+                    
                     <h:form id="nuevamat">
-                        Agregar materia
+                        <p:dialog id="modalDialog" header="Agregar Materia" widgetVar="dlog" modal="true" height="100">  
                         <p:inputText id="nuevamateria" value="#{cursoMateriaBean.parametro}" />
-                        <p:commandButton value="Agregar" update=":tabView:listado" actionListener="#{cursoMateriaBean.agregarMateria()}"/>
+                        <p:commandButton value="Agregar" update=":tabView:listado " oncomplete="dlog.hide()"
+                                         actionListener="#{cursoMateriaBean.agregarMateria()}"/>
+                        </p:dialog>
                     </h:form>
+                    
                 </h:panelGrid>
             </p:tab>
         </p:tabView>
-    
+    </div>
     </h:body>
 </html>

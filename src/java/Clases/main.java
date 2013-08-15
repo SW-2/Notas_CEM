@@ -4,6 +4,7 @@
  */
 package Clases;
 
+import db.CalificacionEstudianteDB;
 import java.util.ArrayList;
 import logica.CursoMateriaLogic;
 
@@ -14,13 +15,12 @@ import logica.CursoMateriaLogic;
 public class main {
     public static void main(String[] args){
        
-        CursoMateriaLogic cml = new CursoMateriaLogic();
-        
-        ArrayList<CursoMateria> lista = cml.materiasPorProfesor("28");
-        for(CursoMateria cm : lista){
-            System.out.println(cm.getMateria().getMatNombre());
-            System.out.println(cm.getCurso().getCurNombre());
-            System.out.println(cm.getCurso().getCurParalelo());
+        int i=0;
+        CalificacionEstudianteDB cedb = new CalificacionEstudianteDB();
+        ArrayList<CalificacionEstudiante> notas = cedb.obtenerPorCursoMateria("5");
+        for(CalificacionEstudiante ce: notas){
+            if(ce.getCalestNota() != null )
+            System.out.println("Registro "+i+" - Nota: "+ce.getCalestNota());
         }
         
         //pa materias por curso

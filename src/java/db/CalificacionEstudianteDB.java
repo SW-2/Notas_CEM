@@ -57,6 +57,8 @@ public class CalificacionEstudianteDB {
         }
     }
     
+    
+    
     public boolean actualizarCalificacion(CalificacionEstudiante ce){
         try{
             ce.setCalestFecha(new Date());
@@ -70,6 +72,29 @@ public class CalificacionEstudianteDB {
             return true;
         }catch(Exception e){
             System.out.println("En ASIGNAR Calificaion a estudiante DB - "+e.getMessage()+" - - ");
+            return false;
+        }
+    }
+    
+    public boolean eliminarPorCursoMateria(String curmat){
+        ArrayList<CalificacionEstudiante> notas = obtenerPorCursoMateria(curmat);
+        try{
+            if(!this.ss.isOpen())
+                this.ss = HibernateUtil.getSessionFactory().openSession();
+            Transaction tx = this.ss.beginTransaction();
+            System.out.println("ELIMINANDO ACTAS calificacion a Estudiante");
+            for(CalificacionEstudiante ce : notas){
+                if(ce.getCalestNota() != null){
+                    this.ss.delete(ce);
+                }
+            }
+            tx.commit();
+            this.ss.close();
+            return true;
+        }catch (Exception e){
+            Transaction tx = this.ss.getTransaction();
+            System.out.println("ERROR EN --------- ELIMINANDO ACTAS calificacion a Estudiante");
+            tx.rollback();
             return false;
         }
     }

@@ -94,7 +94,7 @@ public class MateriaDB {
             return true;
         }catch (Exception e){
             e.printStackTrace();
-            System.out.println("///////////// error en obtener Materias unica   "+e.getMessage());
+            System.out.println("///////////// error en AGREGAR NUEVA Materias "+e.getMessage());
             return false;
         }
     }

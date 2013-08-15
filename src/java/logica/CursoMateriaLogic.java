@@ -50,4 +50,9 @@ public class CursoMateriaLogic {
     public boolean asignarProfesorACursoMateria(String prof, String curmat){
         return cmdb.asignarProfesorACursoMateria(prof, curmat);
     }
+    
+    public boolean eliminarCursoMateria(Curso c, Materia m){
+        return cmdb.eliminarCursoMateria(""+c.getCurId(), ""+m.getMatId());
+        
+    }
 }

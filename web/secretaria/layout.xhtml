@@ -75,10 +75,10 @@ and open the template in the editor.
 
             <p:separator />  
             
-            <p:dataTable id="pars" selection="#{seccionBean.selectedCurso}" selectionMode="single"
+            <p:dataTable id="pars" selection="#{seccionBean.selectedCurso}" selectionMode="single" style="width: 300px;margin-left: 35%;"
                          value="#{seccionBean.dmCur}" var="curso" rowKey="#{curso.curId}">
                 <p:column headerText="Paralelo">
-                    <h:outputText value="#{curso.curParalelo}"/>
+                    <h:outputText  style="margin-left: 45%;" value="#{curso.curParalelo}"/>
                 </p:column>
             </p:dataTable>
         </p:panel>

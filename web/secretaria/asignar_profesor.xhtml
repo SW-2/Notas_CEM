@@ -83,14 +83,14 @@ and open the template in the editor.
             <p:separator />  
             
             <h:panelGrid columns="2" cellpadding="5"> 
-                <p:dataTable selectionMode="single" selection="#{seccionBean.selectedCM}" 
+                <p:dataTable selectionMode="single" selection="#{seccionBean.selectedCM}" style="width: 300px;margin-left: 140%;"
                              id="pars" value="#{seccionBean.dmMaterias}" var="curmat" 
                              rowKey="#{curmat}" editable="true">
                     
                     <p:ajax  event="rowSelect" oncomplete="perDialog.show()" update=":pop:display :pop:dialog"/>
                     
                     <p:column headerText="MATERIA"  style="width:25%">  
-                        <h:outputText value="#{curmat.materia.matNombre}" /> 
+                        <h:outputText style="margin-left: 20%;" value="#{curmat.materia.matNombre}" /> 
                     </p:column> 
                 </p:dataTable>  
             </h:panelGrid>

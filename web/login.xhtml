@@ -6,23 +6,30 @@
       xmlns:p="http://primefaces.org/ui">
 
     <h:head>
-        <title>Login form</title>
+         <p:graphicImage id="tab1Im4"  value="/resources/css/images/nuevo.jpg"  style=" margin-left: 45%;"/>
+          <br/><br/><br/>
+        <title id="titulo" align="center">Bienvenido</title>
+        <noscript>
+		<h:outputStylesheet name="css/5grid/login.css" />
+        </noscript>
     </h:head>
-    <h:body>
-        <h3>Login here</h3>
+    <h:body style="margin-top: 1%;">
+        <section id="content">
         <h:form id="login-form">
-           <h:outputText value="username:fdfdfdfmmmdfdfdf"/>
-           <h:inputText value="#{loginBean.username}" id="username"/>
+           <h:outputText style="  color: #7E7E7E; font: bold 15px Helvetica, Arial, sans-serif; letter-spacing: -0.05em; " value="Usuario:"/>
+           <h:inputText  value="#{loginBean.username}" id="username"/>
            <br/>
-           <h:outputText value="password:"/>
+           <h:outputText style="  color: #7E7E7E; font: bold 15px Helvetica, Arial, sans-serif; letter-spacing: -0.05em; " value="Contraseña:"/>
            <h:inputSecret value="#{loginBean.password}" id="password"/>
            <br/>
            <h:commandButton id="button" value="Login" action="#{loginBean.doLogin}"/>
+           <br/>
            <br/>
            <h:commandLink action="#{navigationBean.redirectToInfo}" value="Info page"/>
            <br/>
            <h:messages />
            <br/>
         </h:form>
+        </section>
     </h:body>
 </html>

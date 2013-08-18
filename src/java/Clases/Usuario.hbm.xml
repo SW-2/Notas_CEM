@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 25/07/2013 01:17:52 PM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="Clases.Usuario" table="Usuario" schema="dbo" catalog="miraflores2">
+        <id name="usuId" type="int">
+            <column name="usu_id" />
+            <generator class="assigned" />
+        </id>
+        <property name="usuLogin" type="string">
+            <column name="usu_login" length="15" />
+        </property>
+        <property name="usuPassword" type="string">
+            <column name="usu_password" length="15" />
+        </property>
+        <property name="usuTipo" type="java.lang.Short">
+            <column name="usu_tipo" />
+        </property>
+    </class>
+</hibernate-mapping>

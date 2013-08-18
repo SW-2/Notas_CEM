@@ -24,5 +24,6 @@
     <mapping resource="Clases/PadreFamilia.hbm.xml"/>
     <mapping resource="Clases/Persona.hbm.xml"/>
     <mapping resource="Clases/Estudiante.hbm.xml"/>
+    <mapping resource="Clases/Usuario.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

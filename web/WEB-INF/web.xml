@@ -4,6 +4,38 @@
         <param-name>javax.faces.PROJECT_STAGE</param-name>
         <param-value>Development</param-value>
     </context-param>
+    <filter>
+        <filter-name>LoginFilter</filter-name>
+        <filter-class>servlets.LoginFilter</filter-class>
+    </filter>
+    <filter>
+        <filter-name>FiltroProfesor</filter-name>
+        <filter-class>servlets.FiltroProfesor</filter-class>
+    </filter>
+    <filter>
+        <filter-name>FiltroEstudiante</filter-name>
+        <filter-class>servlets.FiltroEstudiante</filter-class>
+    </filter>
+    <filter>
+        <filter-name>FiltroSecretaria</filter-name>
+        <filter-class>servlets.FiltroSecretaria</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>FiltroSecretaria</filter-name>
+        <url-pattern>/faces/secretaria/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>FiltroEstudiante</filter-name>
+        <url-pattern>/faces/estudiantes/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>FiltroProfesor</filter-name>
+        <url-pattern>/faces/profesores/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>LoginFilter</filter-name>
+        <url-pattern>/faces/secured/*</url-pattern>
+    </filter-mapping>
     <servlet>
         <servlet-name>ServletPersona</servlet-name>
         <servlet-class>servlets.ServletPersona</servlet-class>

@@ -16,4 +16,5 @@
   <table-filter match-name="Padre_familia"/>
   <table-filter match-name="Parcial"/>
   <table-filter match-name="Profesor"/>
+  <table-filter match-name="Usuario"/>
 </hibernate-reverse-engineering>

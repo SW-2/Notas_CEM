@@ -41,8 +41,15 @@ public class CursoEstudianteLogic {
         return cedb.buscarPorCurso(curso);    
     }
     
+    public ArrayList<CursoEstudiante> buscarPorCursoSeccionSinParalelo(String curso, String seccion){
+        return cedb.buscarPorCursoSeccionSinParalelo(curso,seccion);    
+    }
+    
     public ArrayList<CursoEstudiante> buscarPorEstudiante(String id, String anio){
         return cedb.buscarPorEstudiante(id, anio);
     }
     
+    public boolean actualizarParalelo(CursoEstudiante ce, Curso c){
+        return cedb.actualizarParalelo(ce, c);
+    }
 }

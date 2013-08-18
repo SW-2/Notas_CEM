@@ -76,6 +76,8 @@ public class SeccionBean implements Serializable{
     private Curso selectedCurso = new Curso();
     private CursoDataModel dmCur;
     
+    private CursoEstudianteDataModel dmCurEst;
+    
     PersonaDataModel results;
     CalificacionEstudianteDataModel calestDM;
 
@@ -86,6 +88,16 @@ public class SeccionBean implements Serializable{
             secciones.put(s.getSecNombre(),""+s.getSecId());
         }
     }
+
+    public CursoEstudianteDataModel getDmCurEst() {
+        return dmCurEst;
+    }
+
+    public void setDmCurEst(CursoEstudianteDataModel dmCurEst) {
+        this.dmCurEst = dmCurEst;
+    }
+    
+    
 
     public Curso getSelectedCurso() {
         return selectedCurso;
@@ -129,8 +141,6 @@ public class SeccionBean implements Serializable{
     public void setSelectedCursoEstudiante(CursoEstudiante[] selectedCursoEstudiante) {
         this.selectedCursoEstudiante = selectedCursoEstudiante;
     }
-
-    
 
     
     public Profesor getSelectedProfe() {
@@ -426,6 +436,15 @@ public class SeccionBean implements Serializable{
         
         results = new PersonaDataModel(ests);
     }
+    
+    public void mostrarAlumnoPorCurso(){
+        CursoLogic cl = new CursoLogic();
+        Curso c1 = cl.buscarUnico(cursoId);
+        CursoEstudianteLogic cel = new CursoEstudianteLogic();
+        
+        
+        dmCurEst = new CursoEstudianteDataModel(cel.buscarPorCursoSeccionSinParalelo(""+c1.getCurNombre(), seccionId));
+    }
 
     public CalificacionEstudianteDataModel getCalestDM() {
         return calestDM;
@@ -515,6 +534,21 @@ public class SeccionBean implements Serializable{
         inputProf = "";
         
         selectedCM = cml.buscarUnicaID(""+selectedCM.getCurmatId());
+    }
+    
+    public void cambiarParalelo(){
+        int i=0;
+        CursoEstudianteLogic cel = new CursoEstudianteLogic();
+        CursoLogic cl = new CursoLogic();
+        Curso c = cl.buscarCursoSeccionParalelo(""+selectedCursoEstudiante[0].getCurso().getSeccion().getSecId(), ""+selectedCursoEstudiante[0].getCurso().getCurNombre(), paraleloId);
+        for(i=0;i<selectedCursoEstudiante.length;i++){
+            cel.actualizarParalelo(selectedCursoEstudiante[i], c);
+            System.out.println("Estudiante: "+selectedCursoEstudiante[i].getEstudiante().getPersona().getPerApellidos());
+        }
+        System.out.println("Paralelo: "+paraleloId);
+        
+        
+        
     }
 }
 

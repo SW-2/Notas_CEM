@@ -23,7 +23,7 @@ import logica.CursoMateriaLogic;
 @ManagedBean
 @SessionScoped
 public class ParaProfBean implements Serializable{
-    @ManagedProperty(value="#{loginBean.usuario}")
+    @ManagedProperty(value="#{loginBean.user_id}")
     private String idProfesor;
     private DataModel dmCursoMaterias;
     private CursoMateria selectedCURMAT = new CursoMateria();
@@ -78,7 +78,7 @@ public class ParaProfBean implements Serializable{
         this.dmCursoMaterias = dmCursoMaterias;
     }
     
-    public void simularLogin(){
+    public void loggear(){
         System.out.println("-------------------///////////////////toy en el evento simular :::: "+idProfesor);
         CursoMateriaLogic cml = new CursoMateriaLogic();
         ArrayList<CursoMateria> lista = cml.materiasPorProfesor(idProfesor);

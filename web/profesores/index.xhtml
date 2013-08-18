@@ -9,20 +9,51 @@ and open the template in the editor.
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <title>Estudiantes - Paralelos</title>
+        <title>HeavyIndustry by HTML5Templates.com</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="description" content="" />
+		<meta name="keywords" content="" />
+		<noscript>
+		<h:outputStylesheet name="css/5grid/core.css" />
+		<h:outputStylesheet name="css/5grid/core-desktop.css" />
+		<h:outputStylesheet name="css/5grid/core-1200px.css" />
+		<h:outputStylesheet name="css/5grid/core-noscript.css" />
+		<h:outputStylesheet name="css/styleprof.css" />
+		<h:outputStylesheet name="css/style-desktopprof.css" />
+		</noscript>
+
+		<!--[if IE 9]><link rel="stylesheet" href="css/style-ie9.css" /><![endif]-->
     </h:head>
-    <body>
-        <p:layout fullPage="true">  
+    <body onload="${paraProfBean.loggear()}">
+        
+        <!-- Header -->
+        <div id="header-wrapper">
+            <header id="header">
+                <div class="5grid-layout">
+                    <div class="row">
+                        <div class="5u" id="logo">
+                            <h1><a href="#" class="mobileUI-site-name">HeavyIndustry</a></h1>
+                        </div>
+                        <div class="7u" id="menu">
+                            <nav class="mobileUI-site-nav">
+                                <ul>
+                                    <li class="current_page_item"><a href="#{request.contextPath}/faces/layout.xhtml">Cursos - Paralelos</a></li>
+                                    <li><a href="#{request.contextPath}/faces/asignar_profesor.xhtml">Profesor - Materia</a></li>
+                                    <li ><a href="#{request.contextPath}/faces/materia_curso.xhtml">Curso - Materia</a></li>
+                                    <li><a href="#">Opcion #3</a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </header>
+        </div>
+        
+        <div id="wrapper" class="5grid-layout">
+ 
   
-    <p:layoutUnit position="north" size="100" header="Nombre del profesor" >  
-        <h:outputText value="Elija del lado izquierdo la materia que va a calificar" />  
-        <h:form>
-            <p:commandButton value="Simular" actionListener="#{paraProfBean.simularLogin()}" update=":formmaterias:materias"/>
-        </h:form>
-    </p:layoutUnit>  
   
-  
-    <p:layoutUnit position="west" size="200" header="Materias" resizable="true" closable="false" collapsible="true">  
+    <p:panel>  
         <h:form id="formmaterias">
             <p:dataTable    selection="#{paraProfBean.selectedCURMAT}" selectionMode="single"
                 id="materias" value="#{paraProfBean.dmCursoMaterias}" var="curmat" 
@@ -42,9 +73,9 @@ and open the template in the editor.
             </p:dataTable>
             <p:commandButton value="mostrar" actionListener="#{paraProfBean.mostrarActa()}" update=":formacta:acta"/>
         </h:form>
-    </p:layoutUnit>  
+    </p:panel>  
   
-    <p:layoutUnit position="center">  
+    <p:panel>  
         <h:form id="formacta">
             <p:dataTable id="acta" value="#{paraProfBean.dmCalEst}" var="calest">
                 <p:column headerText="Estudiante" >
@@ -56,8 +87,8 @@ and open the template in the editor.
             </p:dataTable>
             <p:commandButton value="Enviar" id="enviarCalificaciones" actionListener="#{paraProfBean.enviarCalificaciones}"/>
         </h:form>  
-    </p:layoutUnit>  
-  
-</p:layout>
+    </p:panel>  
+ 
+            </div>
     </body>
 </html>
